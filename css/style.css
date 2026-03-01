@@ -656,6 +656,10 @@ body.hero-ready .hero-cta {
   margin-bottom: 0.35rem;
 }
 
+.about-actions {
+  margin: 0.9rem 0 1rem;
+}
+
 .skills-grid,
 .about-skills {
   display: grid;
@@ -779,6 +783,15 @@ body.hero-ready .hero-cta {
   height: 180px;
   object-fit: cover;
   display: block;
+}
+
+.project-card video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  background: #0b1324;
 }
 
 .portfolio .project-card img {
@@ -1398,6 +1411,12 @@ body.motion-ready .reveal.revealed {
 
   .portfolio .project-card img {
     height: 220px;
+  }
+
+  .project-card video,
+  .portfolio .project-card video {
+    aspect-ratio: 16 / 9;
+    height: auto;
   }
 
   .card {

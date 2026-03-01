@@ -172,29 +172,33 @@ document.getElementById("year")?.textContent = new Date().getFullYear();
     card.classList.remove("filter-in");
   };
 
+  const applyFilter = (filter) => {
+    cards.forEach((card) => {
+      card.hidden = false;
+      const show = filter === "all" || card.dataset.category === filter;
+      if (!show) {
+        card.classList.add("filter-out");
+        card.style.display = "none";
+        return;
+      }
+
+      card.style.display = "";
+      card.classList.remove("filter-out");
+      card.classList.add("filter-in");
+      setTimeout(() => resetInClass(card), 360);
+    });
+  };
+
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
       filterButtons.forEach((btn) => btn.classList.remove("active"));
       button.classList.add("active");
-
-      const filter = button.dataset.filter;
-      cards.forEach((card) => {
-        const show = filter === "all" || card.dataset.category === filter;
-        if (!show) {
-          card.classList.add("filter-out");
-          setTimeout(() => {
-            card.hidden = true;
-          }, 180);
-          return;
-        }
-
-        card.hidden = false;
-        card.classList.remove("filter-out");
-        card.classList.add("filter-in");
-        setTimeout(() => resetInClass(card), 360);
-      });
+      applyFilter(button.dataset.filter);
     });
   });
+
+  const initial = document.querySelector(".filter-btn.active")?.dataset.filter || "all";
+  applyFilter(initial);
 })();
 
 (function projectPreview() {
@@ -234,6 +238,8 @@ document.getElementById("year")?.textContent = new Date().getFullYear();
   };
 
   cards.forEach((card) => {
+    if (!card.querySelector("img")) return;
+
     card.addEventListener("click", () => openPreview(card));
     card.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
@@ -330,6 +336,17 @@ document.getElementById("year")?.textContent = new Date().getFullYear();
     index = (index + 1) % cards.length;
     cards[index].classList.add("active");
   }, 3800);
+})();
+
+(function optimizePortfolioVideo() {
+  const videos = document.querySelectorAll('.project-card video');
+  if (!videos.length) return;
+
+  videos.forEach((video) => {
+    video.muted = false;
+    video.volume = 1;
+    video.setAttribute("playsinline", "");
+  });
 })();
 
 (function contactForm() {
