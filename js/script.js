@@ -203,11 +203,10 @@ document.getElementById("year")?.textContent = new Date().getFullYear();
 
 (function projectPreview() {
   const lightbox = document.getElementById("lightbox");
-  const cards = document.querySelectorAll(".project-card");
+  const cards = document.querySelectorAll("#flyer-projects .project-card");
   if (!lightbox || !cards.length) return;
 
   const closeBtn = lightbox.querySelector(".lb-close");
-  const panel = lightbox.querySelector(".lb-panel");
   const image = lightbox.querySelector(".lb-img");
   const caption = lightbox.querySelector(".lb-caption");
   const desc = lightbox.querySelector(".lb-desc");
@@ -222,19 +221,15 @@ document.getElementById("year")?.textContent = new Date().getFullYear();
     caption.textContent = cardTitle?.textContent || "Project";
     if (desc) desc.textContent = cardDesc?.textContent || "Project details";
 
-    lightbox.style.display = "flex";
+    lightbox.classList.add("is-open");
     lightbox.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
-    panel?.requestFullscreen?.().catch(() => {});
   };
 
   const closePreview = () => {
-    lightbox.style.display = "none";
+    lightbox.classList.remove("is-open");
     lightbox.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
-    if (document.fullscreenElement) {
-      document.exitFullscreen?.().catch(() => {});
-    }
   };
 
   cards.forEach((card) => {

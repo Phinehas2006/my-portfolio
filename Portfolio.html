@@ -6,7 +6,7 @@
   <title>Portfolio - Powoh Phinehas</title>
   <link rel="icon" type="image/jpeg" href="images/star.jpg" />
 
-  <link rel="stylesheet" href="css/style.css?v=20260227bb" />
+  <link rel="stylesheet" href="css/style.css?v=20260403b" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@400;600;700&family=Space+Grotesk:wght@500;600;700&family=Bebas+Neue&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -34,13 +34,46 @@
       <h1 class="section-title">Portfolio</h1>
       <p class="portfolio-intro">Selected projects across event design, social media campaigns, and promo editing. Each piece is built around a clear message, strong visual hierarchy, and audience-focused delivery.</p>
 
-      <div class="filters reveal">
-        <button class="filter-btn active" data-filter="graphic">Graphic Design</button>
-        <button class="filter-btn" data-filter="video">Video Editing</button>
-      </div>
+      <div class="portfolio-group reveal">
+        <h2 class="portfolio-group-title">Design Projects</h2>
+        <div class="projects-grid" id="flyer-projects">
+          <article class="project-card reveal">
+          <img src="images/ENGLISH.png" alt="English certificate or flyer design" loading="lazy" decoding="async">
+          <div class="project-info">
+            <h3>English Design Layout</h3>
+            <p class="case-line"><strong>Challenge:</strong> Present information clearly in an English-language format with a clean visual hierarchy.</p>
+            <p class="proj-desc">Designed an English version layout that balances text, spacing, and visual emphasis for easy reading and a professional presentation.</p>
+            <p class="project-meta"><strong>Solution:</strong> Graphic Designer - organized the content for clarity and polished delivery.</p>
+            <p class="project-meta"><strong>Tools:</strong> Photoshop, Illustrator</p>
+            <p class="project-outcome"><strong>Impact:</strong> Added a refined bilingual-ready design asset for digital sharing and presentation use.</p>
+          </div>
+          </article>
 
-      <div class="projects-grid" id="projects">
-        <article class="project-card reveal" data-category="graphic">
+          <article class="project-card reveal">
+          <img src="images/FRENCH.png" alt="French certificate or flyer design" loading="lazy" decoding="async">
+          <div class="project-info">
+            <h3>French Design Layout</h3>
+            <p class="case-line"><strong>Challenge:</strong> Preserve readability and layout balance while adapting the content for a French-speaking audience.</p>
+            <p class="proj-desc">Built a French version of the design with careful spacing, strong structure, and audience-friendly typography for smooth communication.</p>
+            <p class="project-meta"><strong>Solution:</strong> Graphic Designer - adapted the layout for bilingual communication without losing visual consistency.</p>
+            <p class="project-meta"><strong>Tools:</strong> Photoshop, Illustrator</p>
+            <p class="project-outcome"><strong>Impact:</strong> Expanded the project into a second language format ready for wider audience reach.</p>
+          </div>
+          </article>
+
+          <article class="project-card reveal">
+          <img src="images/CERTIFICATE.png" alt="Certificate design layout" loading="lazy" decoding="async">
+          <div class="project-info">
+            <h3>Certificate Design</h3>
+            <p class="case-line"><strong>Challenge:</strong> Create a formal certificate that feels premium, readable, and presentation-ready.</p>
+            <p class="proj-desc">Designed a certificate layout with strong alignment, elegant spacing, and a professional structure suited for official recognition pieces.</p>
+            <p class="project-meta"><strong>Solution:</strong> Graphic Designer - shaped the design around credibility, clarity, and visual polish.</p>
+            <p class="project-meta"><strong>Tools:</strong> Photoshop, Illustrator</p>
+            <p class="project-outcome"><strong>Impact:</strong> Delivered a clean certificate design ready for print or digital issue.</p>
+          </div>
+          </article>
+
+          <article class="project-card reveal">
           <img src="images/EASTER.jpg" alt="Easter celebration flyer design" loading="lazy" decoding="async">
           <div class="project-info">
             <h3>Easter Celebration Flyer</h3>
@@ -50,9 +83,9 @@
             <p class="project-meta"><strong>Tools:</strong> Photoshop, Illustrator</p>
             <p class="project-outcome"><strong>Impact:</strong> Delivered a polished promo visual suited for print, WhatsApp sharing, and social posting.</p>
           </div>
-        </article>
+          </article>
 
-        <article class="project-card reveal" data-category="graphic">
+          <article class="project-card reveal">
           <img src="images/REVIVAL.jpg" alt="Revival event flyer design" loading="lazy" decoding="async">
           <div class="project-info">
             <h3>Revival Flyer Design</h3>
@@ -62,9 +95,9 @@
             <p class="project-meta"><strong>Tools:</strong> Photoshop</p>
             <p class="project-outcome"><strong>Impact:</strong> Produced a strong church-event visual ready for online promotion and local outreach.</p>
           </div>
-        </article>
+          </article>
 
-        <article class="project-card reveal" data-category="graphic">
+          <article class="project-card reveal">
           <img src="images/sunday flyer.png" alt="Sunday flyer church poster design" loading="lazy" decoding="async">
           <div class="project-info">
             <h3>Sunday Flyer Campaign</h3>
@@ -74,9 +107,9 @@
             <p class="project-meta"><strong>Tools:</strong> Photoshop, Illustrator</p>
             <p class="project-outcome"><strong>Impact:</strong> Added a reusable event design style that supports consistent weekly communication.</p>
           </div>
-        </article>
+          </article>
 
-        <article class="project-card reveal" data-category="graphic">
+          <article class="project-card reveal">
           <img src="images/CHURCH POSTER copy.jpg" alt="Church event poster" loading="lazy" decoding="async">
           <div class="project-info">
             <h3>Church Event Poster Campaign</h3>
@@ -86,21 +119,9 @@
             <p class="project-meta"><strong>Tools:</strong> Photoshop, Illustrator</p>
             <p class="project-outcome"><strong>Impact:</strong> Delivered 3 format variants for print, Instagram, and WhatsApp sharing.</p>
           </div>
-        </article>
+          </article>
 
-        <article class="project-card reveal" data-category="graphic">
-          <img src="images/ODSA.jpeg" alt="ODSA promo still" loading="lazy" decoding="async">
-          <div class="project-info">
-            <h3>ODSA Promotional Edit</h3>
-            <p class="case-line"><strong>Challenge:</strong> Communicate value in under 30 seconds for social users.</p>
-            <p class="proj-desc">Produced a short promo cut with rhythm-based transitions, text animation, and voice-over balancing.</p>
-            <p class="project-meta"><strong>Solution:</strong> Video Editor and Motion Designer - built fast hooks and clear sequencing.</p>
-            <p class="project-meta"><strong>Tools:</strong> Premiere Pro, After Effects</p>
-            <p class="project-outcome"><strong>Impact:</strong> Optimized outputs for reels and status posts under 30 seconds.</p>
-          </div>
-        </article>
-
-        <article class="project-card reveal" data-category="graphic">
+          <article class="project-card reveal">
           <img src="images/QUOTE.png" alt="Social media quote cards" loading="lazy" decoding="async">
           <div class="project-info">
             <h3>Branded Quote Card Series</h3>
@@ -110,21 +131,9 @@
             <p class="project-meta"><strong>Tools:</strong> Illustrator, Photoshop</p>
             <p class="project-outcome"><strong>Impact:</strong> Created a scalable template pack for weekly social scheduling.</p>
           </div>
-        </article>
+          </article>
 
-        <article class="project-card reveal" data-category="graphic">
-          <img src="images/SUNDAY SERVICE.jpg" alt="Sunday service highlights" loading="lazy" decoding="async">
-          <div class="project-info">
-            <h3>Sunday Service Highlights</h3>
-            <p class="case-line"><strong>Challenge:</strong> Condense long live moments into a compelling short recap.</p>
-            <p class="proj-desc">Edited a recap cut capturing key moments, crowd response, and speaker highlights with smooth pacing.</p>
-            <p class="project-meta"><strong>Solution:</strong> Editor and Color Finisher - structured emotional pacing and clarity.</p>
-            <p class="project-meta"><strong>Tools:</strong> Premiere Pro, DaVinci Resolve</p>
-            <p class="project-outcome"><strong>Impact:</strong> Finalized a concise highlight format for weekly publishing.</p>
-          </div>
-        </article>
-
-        <article class="project-card reveal" data-category="graphic">
+          <article class="project-card reveal">
           <img src="images/BIBLE STUDY.png" alt="Bible study flyer" loading="lazy" decoding="async">
           <div class="project-info">
             <h3>Bible Study Flyer Set</h3>
@@ -134,9 +143,33 @@
             <p class="project-meta"><strong>Tools:</strong> Photoshop</p>
             <p class="project-outcome"><strong>Impact:</strong> Delivered print-ready and mobile-friendly formats for distribution.</p>
           </div>
-        </article>
+          </article>
 
-        <article class="project-card reveal" data-category="graphic">
+          <article class="project-card reveal">
+          <img src="images/ODSA.jpeg" alt="ODSA promo still" loading="lazy" decoding="async">
+          <div class="project-info">
+            <h3>ODSA Promotional Edit</h3>
+            <p class="case-line"><strong>Challenge:</strong> Communicate value in under 30 seconds for social users.</p>
+            <p class="proj-desc">Produced a short promo cut with rhythm-based transitions, text animation, and voice-over balancing.</p>
+            <p class="project-meta"><strong>Solution:</strong> Video Editor and Motion Designer - built fast hooks and clear sequencing.</p>
+            <p class="project-meta"><strong>Tools:</strong> Premiere Pro, After Effects</p>
+            <p class="project-outcome"><strong>Impact:</strong> Optimized outputs for reels and status posts under 30 seconds.</p>
+          </div>
+          </article>
+
+          <article class="project-card reveal">
+          <img src="images/SUNDAY SERVICE.jpg" alt="Sunday service highlights" loading="lazy" decoding="async">
+          <div class="project-info">
+            <h3>Sunday Service Highlights</h3>
+            <p class="case-line"><strong>Challenge:</strong> Condense long live moments into a compelling short recap.</p>
+            <p class="proj-desc">Edited a recap cut capturing key moments, crowd response, and speaker highlights with smooth pacing.</p>
+            <p class="project-meta"><strong>Solution:</strong> Editor and Color Finisher - structured emotional pacing and clarity.</p>
+            <p class="project-meta"><strong>Tools:</strong> Premiere Pro, DaVinci Resolve</p>
+            <p class="project-outcome"><strong>Impact:</strong> Finalized a concise highlight format for weekly publishing.</p>
+          </div>
+          </article>
+
+          <article class="project-card reveal">
           <img src="images/RG.jpeg" alt="Event promo visual" loading="lazy" decoding="async">
           <div class="project-info">
             <h3>Event Social Teaser</h3>
@@ -146,9 +179,28 @@
             <p class="project-meta"><strong>Tools:</strong> After Effects, Premiere Pro</p>
             <p class="project-outcome"><strong>Impact:</strong> Produced vertical and landscape teaser exports for multi-channel posting.</p>
           </div>
-        </article>
+          </article>
 
-        <article class="project-card reveal" data-category="video">
+        </div>
+      </div>
+
+      <div class="portfolio-group reveal">
+        <h2 class="portfolio-group-title">Edited Videos</h2>
+        <div class="projects-grid" id="video-projects">
+          <article class="project-card reveal">
+            <video controls preload="auto" playsinline>
+              <source src="images/UNITED NATIONS VIDEO.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="project-info">
+              <h3>United Nations Video Edit</h3>
+              <p class="case-line"><strong>Type:</strong> Promotional video edit and presentation piece.</p>
+              <p class="proj-desc">Edited a polished video presentation focused on clarity, pacing, and a professional visual rhythm suited for formal communication.</p>
+              <p class="project-meta"><strong>Tools:</strong> Premiere Pro, After Effects</p>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
           <video controls preload="auto" playsinline>
             <source src="images/DV2S PODCAST.mp4" type="video/mp4">
             Your browser does not support the video tag.
@@ -159,7 +211,8 @@
             <p class="proj-desc">Full video piece prepared for clear storytelling, smooth pacing, and audience retention.</p>
             <p class="project-meta"><strong>Tools:</strong> Premiere Pro, After Effects</p>
           </div>
-        </article>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -187,7 +240,7 @@
   </footer>
 
   <script src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
-  <script src="js/script.js?v=20260301a"></script>
+  <script src="js/script.js?v=20260403a"></script>
 </body>
 </html>
 
