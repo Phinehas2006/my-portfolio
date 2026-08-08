@@ -1,25 +1,93 @@
-/* Shared JS for nav behavior, reveal motion, filtering, project modal, and contact form */
 
-document.body.classList.add("motion-ready");
-document.body.classList.add("intro-active");
+
+document.documentElement.classList.add("motion-ready");
+document.body.classList.add("motion-ready", "intro-active");
 window.setTimeout(() => document.body.classList.add("intro-done"), 140);
 window.setTimeout(() => document.body.classList.remove("intro-active", "intro-done"), 980);
 window.requestAnimationFrame(() => document.body.classList.add("hero-ready"));
 
 (function pageTransitions() {
-  const links = document.querySelectorAll('a[href$=".html"]');
-  links.forEach((link) => {
-    link.addEventListener("click", (event) => {
-      const href = link.getAttribute("href");
-      if (!href || href.startsWith("#")) return;
-      if (link.target === "_blank" || event.metaKey || event.ctrlKey || event.shiftKey) return;
-      event.preventDefault();
-      document.body.classList.add("page-leave");
-      setTimeout(() => {
+  // Morphing page transitions using a full-screen overlay, fetch, and history.pushState
+  const TRANSITION_DURATION = 520;
+  const overlay = document.createElement('div');
+  overlay.id = 'morph-overlay';
+  overlay.setAttribute('aria-hidden', 'true');
+  overlay.innerHTML = '<div class="morph-inner" aria-hidden="true"></div>';
+  document.body.appendChild(overlay);
+
+  const showOverlay = (fromX = 0, fromY = 0) => {
+    overlay.classList.add('visible');
+    overlay.style.setProperty('--tx', fromX + 'px');
+    overlay.style.setProperty('--ty', fromY + 'px');
+    return new Promise((res) => setTimeout(res, TRANSITION_DURATION));
+  };
+
+  const hideOverlay = () => {
+    overlay.classList.remove('visible');
+    return new Promise((res) => setTimeout(res, TRANSITION_DURATION));
+  };
+
+  const loadUrl = async (href, push = true) => {
+    try {
+      const resp = await fetch(href, { credentials: 'same-origin' });
+      if (!resp.ok) throw new Error('Network response not ok');
+      const text = await resp.text();
+      const tmp = document.createElement('div');
+      tmp.innerHTML = text;
+      const newMain = tmp.querySelector('main');
+      const newTitle = tmp.querySelector('title')?.textContent || document.title;
+
+      if (newMain) {
+        const main = document.querySelector('main');
+        // replace main content
+        main.replaceWith(newMain);
+        document.title = newTitle;
+        if (push) history.pushState({ url: href }, newTitle, href);
+        // re-run init functions after content swap
+        reinitializePage();
+      } else {
+        // fallback to full navigation
         window.location.href = href;
-      }, 180);
+      }
+    } catch (err) {
+      console.error('Page load failed for', href, err);
+      window.location.href = href;
+    }
+  };
+
+  const onNavClick = async (event) => {
+    const link = event.currentTarget;
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || link.target === '_blank' || event.metaKey || event.ctrlKey || event.shiftKey) return;
+    event.preventDefault();
+
+    const rect = link.getBoundingClientRect();
+    const fromX = rect.left + rect.width / 2 - window.innerWidth / 2;
+    const fromY = rect.top + rect.height / 2 - window.innerHeight / 2;
+
+    await showOverlay(fromX, fromY);
+    await loadUrl(href);
+    await hideOverlay();
+  };
+
+  const bindLinks = () => {
+    document.querySelectorAll('a[href$=".html"]').forEach((a) => {
+      a.removeEventListener('click', onNavClick);
+      a.addEventListener('click', onNavClick);
     });
+  };
+
+  // popstate support
+  window.addEventListener('popstate', (e) => {
+    const href = location.pathname.split('/').pop() || 'index.html';
+    showOverlay(0,0).then(() => loadUrl(href, false).then(hideOverlay));
   });
+
+  // initial bind
+  bindLinks();
+
+  // Expose small API
+  window.__morph = { bindLinks, showOverlay, hideOverlay, loadUrl };
 })();
 
 (function navMenu() {
@@ -203,7 +271,7 @@ document.getElementById("year")?.textContent = new Date().getFullYear();
 
 (function projectPreview() {
   const lightbox = document.getElementById("lightbox");
-  const cards = document.querySelectorAll("#flyer-projects .project-card");
+  const cards = document.querySelectorAll(".projects-grid .project-card[data-title]");
   if (!lightbox || !cards.length) return;
 
   const closeBtn = lightbox.querySelector(".lb-close");
@@ -292,7 +360,7 @@ document.getElementById("year")?.textContent = new Date().getFullYear();
   if (page === "about.html") {
     window.setTimeout(() => {
       bars.forEach(fill);
-    }, 220);
+    }, 230);
     return;
   }
 
@@ -398,3 +466,92 @@ document.getElementById("year")?.textContent = new Date().getFullYear();
     }
   });
 })();
+
+/* --- Portfolio staggered reveal + lightbox re-init --- */
+function initPortfolioGallery() {
+  const grids = document.querySelectorAll('.projects-grid[data-animate="stagger"]');
+  if (!grids.length || !('IntersectionObserver' in window)) return;
+
+  grids.forEach((grid) => {
+    const cards = Array.from(grid.querySelectorAll('.project-card'));
+    // reset state
+    cards.forEach((c) => c.classList.remove('is-inview'));
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const visibleCards = cards.filter((c) => grid.contains(c));
+        visibleCards.forEach((card, i) => {
+          setTimeout(() => card.classList.add('is-inview'), i * 90);
+        });
+        visibleCards.forEach((c) => obs.unobserve(c));
+      });
+    }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+
+    cards.forEach((card) => observer.observe(card));
+  });
+}
+
+function initLightbox() {
+  const lightbox = document.getElementById('lightbox');
+  if (!lightbox) return;
+  const closeBtn = lightbox.querySelector('.lb-close');
+  const imgEl = lightbox.querySelector('.lb-img');
+  const caption = lightbox.querySelector('.lb-caption');
+  const desc = lightbox.querySelector('.lb-desc');
+
+  const open = (src, title) => {
+    imgEl.src = src || '';
+    imgEl.alt = title || '';
+    caption.textContent = title || '';
+    if (desc) desc.textContent = '';
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const close = () => {
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+
+  // bind cards
+  document.querySelectorAll('.projects-grid .project-card[data-title]').forEach((card) => {
+    card.removeEventListener('click', card._lbHandler);
+    const handler = () => open(card.querySelector('img')?.src, card.dataset.title || 'Project');
+    card._lbHandler = handler;
+    card.addEventListener('click', handler);
+    card.tabIndex = card.tabIndex || 0;
+  });
+
+  closeBtn?.addEventListener('click', close);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lightbox.getAttribute('aria-hidden') === 'false') close(); });
+}
+
+function reinitializePage() {
+  // Re-bind navigation links for morph transitions
+  window.__morph?.bindLinks?.();
+  // update year
+  document.getElementById('year')?.textContent = new Date().getFullYear();
+  // re-init portfolio and lightbox
+  initPortfolioGallery();
+  initLightbox();
+  // re-run any simple layout adjustments
+  (function safeHeroParallax() {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+    const update = () => hero.style.setProperty('--parallax-offset', `${Math.min(window.scrollY * 0.15, 28)}px`);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+  })();
+  // highlight nav again
+  document.querySelectorAll('.nav-link').forEach((link) => link.classList.remove('active'));
+  const path = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-link').forEach((link) => { if (link.getAttribute('href') === path) link.classList.add('active'); });
+}
+
+// initial run for the current page
+initPortfolioGallery();
+initLightbox();
